@@ -54,7 +54,6 @@ jobs:
           INPUT_MODE: ${{ inputs.mode }}
         run: |
           set -euo pipefail
-          python3 -c 'import os,json,base64; p=os.environ["OIDC_TOKEN"].split(".")[1]; c=json.loads(base64.urlsafe_b64decode(p+"="*(-len(p)%4))); print(json.dumps({k:c.get(k) for k in ["repository","ref","workflow_ref","event_name","sub"]}))'
           endpoint="$NOTIFICATION_ENDPOINT"
           if [[ "$EVENT_NAME" == "push" || ( "$EVENT_NAME" == "workflow_dispatch" && "$INPUT_MODE" == "dry-run" ) ]]; then
             endpoint="$endpoint?dry=1"
